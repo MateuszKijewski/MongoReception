@@ -6,7 +6,7 @@ namespace MongoReception.Domain.Entities
 {
     public class Building : IMongoEntity
     {
-        [BsonRepresentation(BsonType.ObjectId)]
+        [BsonId]
         public string Id { get; set; }
 
         [BsonRepresentation(BsonType.String)]

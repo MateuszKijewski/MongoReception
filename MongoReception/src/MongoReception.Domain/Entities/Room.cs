@@ -7,7 +7,6 @@ namespace MongoReception.Domain.Entities
     public class Room : IMongoEntity
     {
         [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
         [BsonRepresentation(BsonType.String)]
@@ -19,7 +18,7 @@ namespace MongoReception.Domain.Entities
         [BsonRepresentation(BsonType.Decimal128)]
         public decimal PricePerDay { get; set; }
 
-        [BsonRepresentation(BsonType.ObjectId)]
+        [BsonRepresentation(BsonType.String)]
         public string BuildingId { get; set; }
 
         [BsonRepresentation(BsonType.Boolean)]

@@ -1,7 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MongoReception.Domain\MongoReception.Domain.csproj" />
+    <ProjectReference Include="..\MongoReception.Infrastructure\MongoReception.Infrastructure.csproj" />
+  </ItemGroup>
 
 </Project>

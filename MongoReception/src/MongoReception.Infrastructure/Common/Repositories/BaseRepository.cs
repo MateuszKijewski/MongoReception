@@ -1,9 +1,11 @@
-﻿using MongoDB.Driver;
+﻿using CSharpVitamins;
+using MongoDB.Driver;
 using MongoReception.DataAccess.Interfaces;
 using MongoReception.Domain.Common.Interfaces;
 using MongoReception.Infrastructure.Common.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MongoReception.Infrastructure.Common.Repositories
 {
@@ -21,31 +23,37 @@ namespace MongoReception.Infrastructure.Common.Repositories
             _entityCollection = db.GetCollection<T>(obj.GetCollectionName());
         }
 
-        public T Add(T entity)
+        public async Task<T> Add(T entity)
         {
-            _entityCollection.InsertOne(entity);
+            entity.Id = ShortGuid.NewGuid();
+            await _entityCollection.InsertOneAsync(entity);
+
 
             return entity;
         }
 
-        public void Delete(string id)
+        public async Task Delete(string id)
         {
-            _entityCollection.DeleteOne(x => x.Id == id);
+            await _entityCollection.DeleteOneAsync(x => x.Id == id);
         }
 
-        public T Get(string id)
+        public async Task<T> Get(string id)
         {
-            return _entityCollection.Find(x => x.Id == id).FirstOrDefault();
+            var requestedObject =  await _entityCollection.FindAsync(x => x.Id == id);
+
+            return requestedObject.FirstOrDefault();
         }
 
-        public IEnumerable<T> List()
+        public async Task<IEnumerable<T>> List()
         {
-            return _entityCollection.Find(_ => true).ToList();
+            var requestedObjects = await _entityCollection.FindAsync(_ => true);
+
+            return requestedObjects.ToList();
         }
 
-        public void Update(T entity)
+        public async Task Update(T entity)
         {
-            _entityCollection.ReplaceOne(x => x.Id == entity.Id, entity);
+            await _entityCollection.ReplaceOneAsync(x => x.Id == entity.Id, entity);
         }
     }
 }
