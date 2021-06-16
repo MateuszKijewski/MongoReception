@@ -12,7 +12,7 @@ namespace MongoReception.Infrastructure.Common.Repositories
     public class BaseRepository<T> : IBaseRepository<T>
         where T : class, IMongoEntity
     {
-        private readonly IMongoCollection<T> _entityCollection;
+        protected readonly IMongoCollection<T> _entityCollection;
 
         public BaseRepository(IReceptionDatabaseSettings settings)
         {
@@ -28,7 +28,6 @@ namespace MongoReception.Infrastructure.Common.Repositories
             entity.Id = ShortGuid.NewGuid();
             await _entityCollection.InsertOneAsync(entity);
 
-
             return entity;
         }
 
@@ -39,16 +38,16 @@ namespace MongoReception.Infrastructure.Common.Repositories
 
         public async Task<T> Get(string id)
         {
-            var requestedObject =  await _entityCollection.FindAsync(x => x.Id == id);
+            var objectRequestResult =  await _entityCollection.FindAsync(x => x.Id == id);
 
-            return requestedObject.FirstOrDefault();
+            return objectRequestResult.FirstOrDefault();
         }
 
         public async Task<IEnumerable<T>> List()
         {
-            var requestedObjects = await _entityCollection.FindAsync(_ => true);
+            var objectRequestResults = await _entityCollection.FindAsync(_ => true);
 
-            return requestedObjects.ToList();
+            return objectRequestResults.ToList();
         }
 
         public async Task Update(T entity)

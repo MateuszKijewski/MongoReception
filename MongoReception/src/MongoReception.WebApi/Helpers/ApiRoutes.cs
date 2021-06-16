@@ -15,5 +15,11 @@
             public const string Specific = Root + "/room/{roomId}";
             public const string Main = Root + "/room";
         }
+
+        public static class User
+        {            
+            public const string Register = Root + "/user/register";
+            public const string Login = Root + "/user/login";
+        }
     }
 }

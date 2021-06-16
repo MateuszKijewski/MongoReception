@@ -12,6 +12,7 @@ using MongoReception.DataAccess.Settings;
 using MongoReception.Infrastructure.Common.Interfaces;
 using MongoReception.Infrastructure.Common.Providers;
 using MongoReception.Infrastructure.Common.Repositories;
+using MongoReception.Infrastructure.Repositories;
 using System;
 
 namespace MongoReception.WebApi
@@ -36,8 +37,11 @@ namespace MongoReception.WebApi
 
             services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddTransient<IBaseRepositoryProvider, BaseRepositoryProvider>();
+            services.AddTransient<IUserRepository, UserRepository>();
+
             services.AddTransient<IBuildingService, BuildingService>();
             services.AddTransient<IRoomService, RoomService>();
+            services.AddTransient<IUserService, UserService>();
 
             services.AddControllers()
                 .AddNewtonsoftJson(options => options.UseMemberCasing());
