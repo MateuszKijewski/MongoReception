@@ -22,15 +22,15 @@ namespace MongoReception.Infrastructure.Repositories
             return requestedUser.FirstOrDefault();
         }
 
-        public async Task<bool> IsAuthenticated(LoginContract loginContract)
+        public async Task<User> GetAuthenticatedUser(LoginContract loginContract)
         {
             var userRequestResult = await _entityCollection.FindAsync<User>((FilterDefinition<User>)(x => x.Email == loginContract.Email));
             var user = userRequestResult.FirstOrDefault();
             if (user != null)
             {
-                return user.Password == loginContract.Password;
+                return user;
             }
-            return false;
+            return null;
         }
     }
 }

@@ -8,6 +8,6 @@ namespace MongoReception.Infrastructure.Common.Interfaces
     {
         Task<User> GetByEmail(string email);
 
-        Task<bool> IsAuthenticated(LoginContract loginContract);
+        Task<User> GetAuthenticatedUser(LoginContract loginContract);
     }
 }

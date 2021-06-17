@@ -17,7 +17,7 @@ namespace MongoReception.WebApi.Controllers
         }
 
         [HttpPost(ApiRoutes.User.Register)]
-        public async Task<IActionResult> Get([FromBody] User user)
+        public async Task<IActionResult> Register([FromBody] User user)
         {
             try
             {
@@ -32,13 +32,17 @@ namespace MongoReception.WebApi.Controllers
         }
 
         [HttpPost(ApiRoutes.User.Login)]
-        public async Task<IActionResult> Delete([FromBody] LoginContract loginContract)
+        public async Task<IActionResult> Login([FromBody] LoginContract loginContract)
         {
             try
             {
-                var isAuthenticated = await _userService.Authenticate(loginContract);
+                var authenticatedUser = await _userService.Authenticate(loginContract);
 
-                return Ok(isAuthenticated);
+                if (authenticatedUser != null)
+                {
+                    return Ok(authenticatedUser);
+                }
+                return BadRequest();
             }
             catch (Exception e)
             {

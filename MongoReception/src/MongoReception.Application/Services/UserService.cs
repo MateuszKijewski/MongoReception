@@ -15,9 +15,9 @@ namespace MongoReception.Application.Services
             _userRepository = userRepository;
         }
 
-        public async Task<bool> Authenticate(LoginContract loginContract)
+        public async Task<User> Authenticate(LoginContract loginContract)
         {
-            return await _userRepository.IsAuthenticated(loginContract);
+            return await _userRepository.GetAuthenticatedUser(loginContract);
         }
 
         public async Task<User> Register(User user)
