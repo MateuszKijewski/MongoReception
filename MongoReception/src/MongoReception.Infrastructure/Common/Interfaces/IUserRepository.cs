@@ -1,4 +1,4 @@
-﻿using MongoReception.Domain.Contracts.User;
+﻿using MongoReception.Domain.Contracts.Users;
 using MongoReception.Domain.Entities;
 using System.Threading.Tasks;
 

@@ -30,7 +30,7 @@ namespace MongoReception.Domain.Entities
         [BsonRepresentation(BsonType.Double)]
         public double Longitude { get; set; }
 
-        public BsonDocument Extras { get; set; }
+        public BsonArray Extras { get; set; }
 
         public string GetCollectionName()
         {

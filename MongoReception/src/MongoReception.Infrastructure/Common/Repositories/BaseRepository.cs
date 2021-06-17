@@ -13,11 +13,11 @@ namespace MongoReception.Infrastructure.Common.Repositories
         where T : class, IMongoEntity
     {
         protected readonly IMongoCollection<T> _entityCollection;
-
+        protected readonly IMongoClient _mongoClient;
         public BaseRepository(IReceptionDatabaseSettings settings)
         {
-            var client = new MongoClient(settings.ConnectionString);
-            var db = client.GetDatabase(settings.DatabaseName);
+            _mongoClient = new MongoClient(settings.ConnectionString);
+            var db = _mongoClient.GetDatabase(settings.DatabaseName);
 
             T obj = (T)Activator.CreateInstance(typeof(T));
             _entityCollection = db.GetCollection<T>(obj.GetCollectionName());

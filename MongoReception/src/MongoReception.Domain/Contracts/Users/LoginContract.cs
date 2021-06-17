@@ -1,4 +1,4 @@
-﻿namespace MongoReception.Domain.Contracts.User
+﻿namespace MongoReception.Domain.Contracts.Users
 {
     public class LoginContract
     {

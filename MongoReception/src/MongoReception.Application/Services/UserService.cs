@@ -1,5 +1,5 @@
 ﻿using MongoReception.Application.Common.Interfaces;
-using MongoReception.Domain.Contracts.User;
+using MongoReception.Domain.Contracts.Users;
 using MongoReception.Domain.Entities;
 using MongoReception.Infrastructure.Common.Interfaces;
 using System;

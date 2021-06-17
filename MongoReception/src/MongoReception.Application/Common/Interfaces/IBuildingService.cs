@@ -1,4 +1,5 @@
 ﻿using MongoReception.Domain.Entities;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -15,5 +16,9 @@ namespace MongoReception.Application.Common.Interfaces
         Task UpdateBuilding(Building building);
 
         Task DeleteBuilding(string id);
+
+        Task AttachExtrasToBuilding(string buildingId, string rawExtras);
+
+        Task AddBuildingWithExtras(JObject rawBuildingWithExtras);
     }
 }

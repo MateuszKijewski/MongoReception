@@ -1,6 +1,6 @@
 ﻿using MongoDB.Driver;
 using MongoReception.DataAccess.Interfaces;
-using MongoReception.Domain.Contracts.User;
+using MongoReception.Domain.Contracts.Users;
 using MongoReception.Domain.Entities;
 using MongoReception.Infrastructure.Common.Interfaces;
 using MongoReception.Infrastructure.Common.Repositories;
@@ -17,7 +17,8 @@ namespace MongoReception.Infrastructure.Repositories
 
         public async Task<User> GetByEmail(string email)
         {
-            var requestedUser = await _entityCollection.FindAsync<User>((FilterDefinition<User>)(x => x.Id == email));
+            var filter = Builders<User>.Filter.Eq(nameof(User.Email), email);
+            var requestedUser = await _entityCollection.FindAsync(filter);
 
             return requestedUser.FirstOrDefault();
         }
@@ -26,11 +27,7 @@ namespace MongoReception.Infrastructure.Repositories
         {
             var userRequestResult = await _entityCollection.FindAsync<User>((FilterDefinition<User>)(x => x.Email == loginContract.Email));
             var user = userRequestResult.FirstOrDefault();
-            if (user != null)
-            {
-                return user;
-            }
-            return null;
+            return user != null ? user : null;
         }
     }
 }
