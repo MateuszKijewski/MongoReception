@@ -33,8 +33,7 @@ namespace MongoReception.Domain.Entities
         [BsonRepresentation(BsonType.Boolean)]
         public bool IsRent { get; set; }
 
-        [BsonRepresentation(BsonType.Boolean)]
-        public bool IsDeleted { get; set; }
+        public BsonDocument Extras { get; set; }
 
         public string GetCollectionName()
         {
