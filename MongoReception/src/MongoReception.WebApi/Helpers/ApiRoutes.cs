@@ -8,12 +8,16 @@
         {
             public const string Specific = Root + "/building/{buildingId}";
             public const string Main = Root + "/building";
+            public const string AttachExtras = Root + "/building/{buildingId}/extras";
+            public const string Extras = Root + "/building/extras";
         }
 
         public static class Room
         {
             public const string Specific = Root + "/room/{roomId}";
             public const string Main = Root + "/room";
+            public const string AttachExtras = Root + "/room/{roomId}/extras";
+            public const string Extras = Root + "/room/extras";
         }
 
         public static class User

@@ -1,6 +1,8 @@
-﻿using MongoReception.Application.Common.Interfaces;
+﻿using MongoDB.Bson;
+using MongoReception.Application.Common.Interfaces;
 using MongoReception.Domain.Entities;
 using MongoReception.Infrastructure.Common.Interfaces;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,11 +10,11 @@ namespace MongoReception.Application.Services
 {
     public class BuildingService : IBuildingService
     {
-        private readonly IBaseRepository<Building> _buildingRepository;
+        private readonly IBuildingRepository _buildingRepository;
 
-        public BuildingService(IBaseRepositoryProvider repositoryProvider)
+        public BuildingService(IBuildingRepository buildingRepository)
         {
-            _buildingRepository = repositoryProvider.GetRepository<Building>();
+            _buildingRepository = buildingRepository;
         }
 
         public async Task<Building> AddBuilding(Building building)
@@ -38,6 +40,25 @@ namespace MongoReception.Application.Services
         public async Task UpdateBuilding(Building building)
         {
             await _buildingRepository.Update(building);
+        }
+
+        public async Task AttachExtrasToBuilding(string buildingId, JObject rawExtras)
+        {
+            var extras = MongoDB.Bson.Serialization.BsonSerializer.Deserialize<BsonArray>(rawExtras.ToString());
+
+            await _buildingRepository.AttachExtras(buildingId, extras);
+        }
+
+        public async Task AddBuildingWithExtras(JObject rawBuildingWithExtras)
+        {
+
+            var rawBuilding = rawBuildingWithExtras["building"];
+            var rawExtras = rawBuildingWithExtras["rawExtras"];
+
+            var building = rawBuilding.ToObject<Building>();
+            var extras = MongoDB.Bson.Serialization.BsonSerializer.Deserialize<BsonArray>(rawExtras.ToString());
+
+            await _buildingRepository.AddWithExtras(building, extras);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using MongoReception.Domain.Contracts.User;
+﻿using MongoReception.Domain.Contracts.Users;
 using MongoReception.Domain.Entities;
 using System.Threading.Tasks;
 
@@ -8,6 +8,6 @@ namespace MongoReception.Infrastructure.Common.Interfaces
     {
         Task<User> GetByEmail(string email);
 
-        Task<bool> IsAuthenticated(LoginContract loginContract);
+        Task<User> GetAuthenticatedUser(LoginContract loginContract);
     }
 }

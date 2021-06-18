@@ -13,6 +13,12 @@ namespace MongoReception.Domain.Entities
         public string Name { get; set; }
 
         [BsonRepresentation(BsonType.String)]
+        public string Description { get; set; }
+
+        [BsonRepresentation(BsonType.String)]
+        public string Image { get; set; }
+
+        [BsonRepresentation(BsonType.String)]
         public string StreetName { get; set; }
 
         [BsonRepresentation(BsonType.String)]
@@ -30,7 +36,7 @@ namespace MongoReception.Domain.Entities
         [BsonRepresentation(BsonType.Double)]
         public double Longitude { get; set; }
 
-        public BsonDocument Extras { get; set; }
+        public BsonArray Extras { get; set; }
 
         public string GetCollectionName()
         {

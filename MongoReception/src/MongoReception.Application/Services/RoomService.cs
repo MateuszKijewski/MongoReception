@@ -1,6 +1,8 @@
-﻿using MongoReception.Application.Common.Interfaces;
+﻿using MongoDB.Bson;
+using MongoReception.Application.Common.Interfaces;
 using MongoReception.Domain.Entities;
 using MongoReception.Infrastructure.Common.Interfaces;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,11 +10,11 @@ namespace MongoReception.Application.Services
 {
     public class RoomService : IRoomService
     {
-        private readonly IBaseRepository<Room> _roomRepository;
+        private readonly IRoomRepository _roomRepository;
 
-        public RoomService(IBaseRepositoryProvider repositoryProvider)
+        public RoomService(IRoomRepository roomRepository)
         {
-            _roomRepository = repositoryProvider.GetRepository<Room>();
+            _roomRepository = roomRepository;
         }
 
         public async Task<Room> AddRoom(Room room)
@@ -38,6 +40,25 @@ namespace MongoReception.Application.Services
         public async Task UpdateRoom(Room room)
         {
             await _roomRepository.Update(room);
+        }
+
+        public async Task AttachExtrasToRoom(string roomId, JObject rawExtras)
+        {
+            var extras = MongoDB.Bson.Serialization.BsonSerializer.Deserialize<BsonArray>(rawExtras.ToString());
+
+            await _roomRepository.AttachExtras(roomId, extras);
+        }
+
+        public async Task AddRoomWithExtras(JObject rawRoomWithExtras)
+        {
+
+            var rawRoom = rawRoomWithExtras["room"];
+            var rawExtras = rawRoomWithExtras["rawExtras"];
+
+            var room = rawRoom.ToObject<Room>();
+            var extras = MongoDB.Bson.Serialization.BsonSerializer.Deserialize<BsonArray>(rawExtras.ToString());
+
+            await _roomRepository.AddWithExtras(room, extras);
         }
     }
 }

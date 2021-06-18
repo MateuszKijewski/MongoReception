@@ -2,6 +2,7 @@
 using MongoReception.Application.Common.Interfaces;
 using MongoReception.Domain.Entities;
 using MongoReception.WebApi.Helpers;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Threading.Tasks;
 
@@ -81,6 +82,37 @@ namespace MongoReception.WebApi.Controllers
             try
             {
                 await _buildingService.AddBuilding(building);
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+
+        [HttpPost(ApiRoutes.Building.AttachExtras)]
+        public async Task<IActionResult> AttachExtras([FromRoute] string buildingId, [FromBody] JObject rawExtras)
+        {
+            try
+            {
+                await _buildingService.AttachExtrasToBuilding(buildingId, rawExtras);
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+        [HttpPost(ApiRoutes.Building.Extras)]
+        public async Task<IActionResult> AddWithExtras([FromBody] JObject rawBuildingWithExtras)
+        {
+            try
+            {                
+                await _buildingService.AddBuildingWithExtras(rawBuildingWithExtras);
 
                 return Ok();
             }

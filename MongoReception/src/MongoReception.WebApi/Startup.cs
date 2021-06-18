@@ -38,6 +38,8 @@ namespace MongoReception.WebApi
             services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddTransient<IBaseRepositoryProvider, BaseRepositoryProvider>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IBuildingRepository, BuildingRepository>();
+            services.AddTransient<IRoomRepository, RoomRepository>();
 
             services.AddTransient<IBuildingService, BuildingService>();
             services.AddTransient<IRoomService, RoomService>();
