@@ -16,7 +16,8 @@
         {
             public const string Specific = Root + "/room/{roomId}";
             public const string Main = Root + "/room";
-            public const string Extras = Root + "/room/{roomId}/extras";
+            public const string AttachExtras = Root + "/room/{roomId}/extras";
+            public const string Extras = Root + "/room/extras";
         }
 
         public static class User

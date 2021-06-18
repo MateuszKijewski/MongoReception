@@ -2,6 +2,7 @@
 using MongoReception.Application.Common.Interfaces;
 using MongoReception.Domain.Entities;
 using MongoReception.WebApi.Helpers;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Threading.Tasks;
 
@@ -81,6 +82,36 @@ namespace MongoReception.WebApi.Controllers
             try
             {
                 await _roomService.AddRoom(room);
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+        [HttpPost(ApiRoutes.Room.AttachExtras)]
+        public async Task<IActionResult> AttachExtras([FromRoute] string roomId, [FromBody] JObject rawExtras)
+        {
+            try
+            {
+                await _roomService.AttachExtrasToRoom(roomId, rawExtras);
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+        [HttpPost(ApiRoutes.Room.Extras)]
+        public async Task<IActionResult> AddWithExtras([FromBody] JObject rawRoomWithExtras)
+        {
+            try
+            {
+                await _roomService.AddRoomWithExtras(rawRoomWithExtras);
 
                 return Ok();
             }

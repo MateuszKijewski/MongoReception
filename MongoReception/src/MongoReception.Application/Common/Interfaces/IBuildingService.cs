@@ -17,7 +17,7 @@ namespace MongoReception.Application.Common.Interfaces
 
         Task DeleteBuilding(string id);
 
-        Task AttachExtrasToBuilding(string buildingId, string rawExtras);
+        Task AttachExtrasToBuilding(string buildingId, JObject rawExtras);
 
         Task AddBuildingWithExtras(JObject rawBuildingWithExtras);
     }

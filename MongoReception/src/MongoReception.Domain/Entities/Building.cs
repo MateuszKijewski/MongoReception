@@ -13,6 +13,12 @@ namespace MongoReception.Domain.Entities
         public string Name { get; set; }
 
         [BsonRepresentation(BsonType.String)]
+        public string Description { get; set; }
+
+        [BsonRepresentation(BsonType.String)]
+        public string Image { get; set; }
+
+        [BsonRepresentation(BsonType.String)]
         public string StreetName { get; set; }
 
         [BsonRepresentation(BsonType.String)]

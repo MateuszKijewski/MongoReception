@@ -9,22 +9,22 @@ using System.Threading.Tasks;
 
 namespace MongoReception.Infrastructure.Repositories
 {
-    public class BuildingRepository : BaseRepository<Building>, IBuildingRepository
+    public class RoomRepository : BaseRepository<Room>, IRoomRepository
     {
-        public BuildingRepository(IReceptionDatabaseSettings settings)
+        public RoomRepository(IReceptionDatabaseSettings settings)
             : base(settings)
         {
         }
 
-        public async Task AttachExtras(string buildingId, BsonArray extras)
+        public async Task AttachExtras(string roomId, BsonArray extras)
         {
-            var filter = Builders<Building>.Filter.Eq(nameof(Building.Id), buildingId);
-            var update = Builders<Building>.Update.Set(nameof(Building.Extras), extras);
+            var filter = Builders<Room>.Filter.Eq(nameof(Room.Id), roomId);
+            var update = Builders<Room>.Update.Set(nameof(Room.Extras), extras);
 
             await _entityCollection.UpdateOneAsync(filter, update);
         }
 
-        public async Task AddWithExtras(Building building, BsonArray extras)
+        public async Task AddWithExtras(Room room, BsonArray extras)
         {
             using (var session = _mongoClient.StartSession())
             {
@@ -32,8 +32,8 @@ namespace MongoReception.Infrastructure.Repositories
                 {
                     session.StartTransaction();
 
-                    var addedBuilding = await Add(building);
-                    await AttachExtras(addedBuilding.Id, extras);
+                    var addedRoom = await Add(room);
+                    await AttachExtras(addedRoom.Id, extras);
 
                     session.CommitTransaction();
                 }

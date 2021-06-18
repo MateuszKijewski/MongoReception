@@ -97,7 +97,7 @@ namespace MongoReception.WebApi.Controllers
         {
             try
             {
-                await _buildingService.AttachExtrasToBuilding("asd", "asd");
+                await _buildingService.AttachExtrasToBuilding(buildingId, rawExtras);
 
                 return Ok();
             }

@@ -42,9 +42,9 @@ namespace MongoReception.Application.Services
             await _buildingRepository.Update(building);
         }
 
-        public async Task AttachExtrasToBuilding(string buildingId, string rawExtras)
+        public async Task AttachExtrasToBuilding(string buildingId, JObject rawExtras)
         {
-            var extras = MongoDB.Bson.Serialization.BsonSerializer.Deserialize<BsonArray>(rawExtras);
+            var extras = MongoDB.Bson.Serialization.BsonSerializer.Deserialize<BsonArray>(rawExtras.ToString());
 
             await _buildingRepository.AttachExtras(buildingId, extras);
         }
@@ -56,8 +56,7 @@ namespace MongoReception.Application.Services
             var rawExtras = rawBuildingWithExtras["rawExtras"];
 
             var building = rawBuilding.ToObject<Building>();
-            var extrasObject = rawExtras.ToString();
-            var extras = MongoDB.Bson.Serialization.BsonSerializer.Deserialize<BsonArray>(extrasObject);
+            var extras = MongoDB.Bson.Serialization.BsonSerializer.Deserialize<BsonArray>(rawExtras.ToString());
 
             await _buildingRepository.AddWithExtras(building, extras);
         }
