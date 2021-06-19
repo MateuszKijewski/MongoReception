@@ -3,6 +3,7 @@ using MongoReception.Domain.Contracts.Users;
 using MongoReception.Domain.Entities;
 using MongoReception.Infrastructure.Common.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MongoReception.Application.Services
@@ -15,10 +16,20 @@ namespace MongoReception.Application.Services
             _userRepository = userRepository;
         }
 
+        public async Task<IEnumerable<User>> GetAllUsers()
+        {
+            return await _userRepository.List();
+        }
+
+        public async Task<User> GetUser(string id)
+        {
+            return await _userRepository.Get(id);
+        }
+
         public async Task<User> Authenticate(LoginContract loginContract)
         {
             return await _userRepository.GetAuthenticatedUser(loginContract);
-        }
+        }        
 
         public async Task<User> Register(User user)
         {

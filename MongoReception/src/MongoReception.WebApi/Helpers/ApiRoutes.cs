@@ -22,7 +22,9 @@
         }
 
         public static class User
-        {            
+        {
+            public const string Specific = Root + "/user/{userId}";
+            public const string Main = Root + "/user";
             public const string Register = Root + "/user/register";
             public const string Login = Root + "/user/login";
         }
