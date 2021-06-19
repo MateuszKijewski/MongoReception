@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MongoReception.Application.Common.Interfaces;
+using MongoReception.Domain.Contracts.Buildings;
 using MongoReception.Domain.Entities;
 using MongoReception.WebApi.Helpers;
 using Newtonsoft.Json.Linq;
@@ -115,6 +116,21 @@ namespace MongoReception.WebApi.Controllers
                 await _buildingService.AddBuildingWithExtras(rawBuildingWithExtras);
 
                 return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+        [HttpPost(ApiRoutes.Building.GeoLocalization)]
+        public async Task<IActionResult> Locate([FromBody] GeoLocalizationContract clientLocation)
+        {
+            try
+            {
+                var nearbyBuildings = await _buildingService.FindBuildingsNearClient(clientLocation);
+
+                return Ok(nearbyBuildings);
             }
             catch (Exception e)
             {

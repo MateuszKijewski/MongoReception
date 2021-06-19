@@ -14,13 +14,15 @@ namespace MongoReception.Infrastructure.Common.Repositories
     {
         protected readonly IMongoCollection<T> _entityCollection;
         protected readonly IMongoClient _mongoClient;
+        protected readonly IMongoDatabase _db;
+
         public BaseRepository(IReceptionDatabaseSettings settings)
         {
             _mongoClient = new MongoClient(settings.ConnectionString);
-            var db = _mongoClient.GetDatabase(settings.DatabaseName);
+            _db = _mongoClient.GetDatabase(settings.DatabaseName);
 
             T obj = (T)Activator.CreateInstance(typeof(T));
-            _entityCollection = db.GetCollection<T>(obj.GetCollectionName());
+            _entityCollection = _db.GetCollection<T>(obj.GetCollectionName());
         }
 
         public async Task<T> Add(T entity)

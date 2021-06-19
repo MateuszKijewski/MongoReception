@@ -10,6 +10,7 @@
             public const string Main = Root + "/building";
             public const string AttachExtras = Root + "/building/{buildingId}/extras";
             public const string Extras = Root + "/building/extras";
+            public const string GeoLocalization = Root + "/building/locate";
         }
 
         public static class Room
