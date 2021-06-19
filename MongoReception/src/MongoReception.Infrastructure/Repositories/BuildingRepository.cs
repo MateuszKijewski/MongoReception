@@ -1,10 +1,12 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDB.Driver.GeoJsonObjectModel;
 using MongoReception.DataAccess.Interfaces;
 using MongoReception.Domain.Entities;
 using MongoReception.Infrastructure.Common.Interfaces;
 using MongoReception.Infrastructure.Common.Repositories;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MongoReception.Infrastructure.Repositories
@@ -43,6 +45,25 @@ namespace MongoReception.Infrastructure.Repositories
                     throw;
                 }
             }
+        }
+
+        public async Task<IEnumerable<Building>> FindNear(double latitude, double longitude)
+        {
+            await Ensure2DSphereIndexCreation();
+
+            var point = GeoJson.Point(GeoJson.Geographic(longitude, latitude));
+            FieldDefinition<Building> field = nameof(Building.Location);
+            var filter = Builders<Building>.Filter.Near(field, point, 10000 * 1000);
+
+            var buildingsRequestResult = await _entityCollection.FindAsync(filter);
+
+            return buildingsRequestResult.ToList();
+        }
+
+        private async Task Ensure2DSphereIndexCreation()
+        {
+            var indexKeysDefinition = Builders<Building>.IndexKeys.Geo2DSphere(x => x.Location);
+            await _entityCollection.Indexes.CreateOneAsync(new CreateIndexModel<Building>(indexKeysDefinition));
         }
     }
 }

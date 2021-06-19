@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Driver.GeoJsonObjectModel;
 using MongoReception.Domain.Common.Interfaces;
 
 namespace MongoReception.Domain.Entities
@@ -37,6 +38,9 @@ namespace MongoReception.Domain.Entities
         public double Longitude { get; set; }
 
         public BsonArray Extras { get; set; }
+
+        [BsonElement("location")]
+        public GeoJsonPoint<GeoJson2DGeographicCoordinates> Location { get; set; }
 
         public string GetCollectionName()
         {

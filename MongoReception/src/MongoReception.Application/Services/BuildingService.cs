@@ -1,5 +1,7 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Driver.GeoJsonObjectModel;
 using MongoReception.Application.Common.Interfaces;
+using MongoReception.Domain.Contracts.Buildings;
 using MongoReception.Domain.Entities;
 using MongoReception.Infrastructure.Common.Interfaces;
 using Newtonsoft.Json.Linq;
@@ -19,6 +21,8 @@ namespace MongoReception.Application.Services
 
         public async Task<Building> AddBuilding(Building building)
         {
+            building.Location = GeoJson.Point(GeoJson.Geographic(building.Longitude, building.Latitude));
+
             return await _buildingRepository.Add(building);
         }
 
@@ -59,6 +63,11 @@ namespace MongoReception.Application.Services
             var extras = MongoDB.Bson.Serialization.BsonSerializer.Deserialize<BsonArray>(rawExtras.ToString());
 
             await _buildingRepository.AddWithExtras(building, extras);
+        }
+
+        public async Task<IEnumerable<Building>> FindBuildingsNearClient(GeoLocalizationContract clientLocation)
+        {            
+            return await _buildingRepository.FindNear(clientLocation.Longitude, clientLocation.Latitude);
         }
     }
 }

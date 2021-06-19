@@ -1,4 +1,5 @@
-﻿using MongoReception.Domain.Entities;
+﻿using MongoReception.Domain.Contracts.Buildings;
+using MongoReception.Domain.Entities;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -20,5 +21,7 @@ namespace MongoReception.Application.Common.Interfaces
         Task AttachExtrasToBuilding(string buildingId, JObject rawExtras);
 
         Task AddBuildingWithExtras(JObject rawBuildingWithExtras);
+
+        Task<IEnumerable<Building>> FindBuildingsNearClient(GeoLocalizationContract clientLocalization);
     }
 }
