@@ -44,6 +44,7 @@ namespace MongoReception.WebApi
             services.AddTransient<IBuildingService, BuildingService>();
             services.AddTransient<IRoomService, RoomService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IReservationService, ReservationService>();
 
             services.AddControllers()
                 .AddNewtonsoftJson(options => options.UseMemberCasing());

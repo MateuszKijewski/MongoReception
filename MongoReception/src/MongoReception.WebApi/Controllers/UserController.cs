@@ -16,6 +16,36 @@ namespace MongoReception.WebApi.Controllers
             _userService = userService;
         }
 
+        [HttpGet(ApiRoutes.User.Specific)]
+        public async Task<IActionResult> Get([FromRoute] string userId)
+        {
+            try
+            {
+                var requestedUser = await _userService.GetUser(userId);
+
+                return Ok(requestedUser);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+        [HttpGet(ApiRoutes.User.Main)]
+        public async Task<IActionResult> List()
+        {
+            try
+            {
+                var requestedUsers = await _userService.GetAllUsers();
+
+                return Ok(requestedUsers);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
         [HttpPost(ApiRoutes.User.Register)]
         public async Task<IActionResult> Register([FromBody] User user)
         {
