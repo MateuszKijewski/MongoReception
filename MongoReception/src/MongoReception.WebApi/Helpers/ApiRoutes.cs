@@ -28,5 +28,12 @@
             public const string Register = Root + "/user/register";
             public const string Login = Root + "/user/login";
         }
+
+        public static class Reservation
+        {
+            public const string Specific = Root + "/reservation/{reservationId}";
+            public const string Main = Root + "/reservation";
+            public const string Payment = Root + "/reservation/{reservationId}/pay";
+        }
     }
 }
