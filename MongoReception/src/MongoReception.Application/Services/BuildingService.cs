@@ -62,6 +62,8 @@ namespace MongoReception.Application.Services
             var building = rawBuilding.ToObject<Building>();
             var extras = MongoDB.Bson.Serialization.BsonSerializer.Deserialize<BsonArray>(rawExtras.ToString());
 
+            building.Location = GeoJson.Point(GeoJson.Geographic(building.Longitude, building.Latitude));
+
             await _buildingRepository.AddWithExtras(building, extras);
         }
 
