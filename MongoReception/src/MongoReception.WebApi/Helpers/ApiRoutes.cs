@@ -35,5 +35,13 @@
             public const string Main = Root + "/reservation";
             public const string Payment = Root + "/reservation/{reservationId}/pay";
         }
+
+        public static class HandOverReport
+        {
+            public const string Specific = Root + "/handovereport/{handovereportId}";
+            public const string Main = Root + "/handovereport";
+            public const string AttachDetails = Root + "/handovereport/{handovereportId}/details";
+            public const string Details = Root + "/handovereport/details";
+        }
     }
 }
