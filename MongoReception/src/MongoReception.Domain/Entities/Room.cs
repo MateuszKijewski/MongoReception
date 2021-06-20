@@ -39,7 +39,7 @@ namespace MongoReception.Domain.Entities
         [BsonRepresentation(BsonType.Boolean)]
         public bool IsRent { get; set; }
 
-        public BsonDocument Extras { get; set; }
+        public BsonArray Extras { get; set; }
 
         public string GetCollectionName()
         {
