@@ -9,7 +9,7 @@ namespace MongoReception.Infrastructure.Common.Interfaces
     {
         Task AttachExtras(string buildingId, BsonArray extras);
 
-        Task AddWithExtras(Building building, BsonArray extras);
+        Task<Building> AddWithExtras(Building building, BsonArray extras);
 
         Task<IEnumerable<Building>> FindNear(double longitude, double latitude);
     }

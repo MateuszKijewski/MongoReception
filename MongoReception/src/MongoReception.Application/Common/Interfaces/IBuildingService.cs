@@ -20,7 +20,7 @@ namespace MongoReception.Application.Common.Interfaces
 
         Task AttachExtrasToBuilding(string buildingId, JObject rawExtras);
 
-        Task AddBuildingWithExtras(JObject rawBuildingWithExtras);
+        Task<Building> AddBuildingWithExtras(JObject rawBuildingWithExtras);
 
         Task<IEnumerable<Building>> FindBuildingsNearClient(GeoLocalizationContract clientLocalization);
     }

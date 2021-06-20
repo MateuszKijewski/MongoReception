@@ -111,9 +111,9 @@ namespace MongoReception.WebApi.Controllers
         {
             try
             {
-                await _roomService.AddRoomWithExtras(rawRoomWithExtras);
+                var addedRoom = await _roomService.AddRoomWithExtras(rawRoomWithExtras);
 
-                return Ok();
+                return Ok(addedRoom);
             }
             catch (Exception e)
             {

@@ -53,7 +53,7 @@ namespace MongoReception.Application.Services
             await _buildingRepository.AttachExtras(buildingId, extras);
         }
 
-        public async Task AddBuildingWithExtras(JObject rawBuildingWithExtras)
+        public async Task<Building> AddBuildingWithExtras(JObject rawBuildingWithExtras)
         {
 
             var rawBuilding = rawBuildingWithExtras["building"];
@@ -64,7 +64,7 @@ namespace MongoReception.Application.Services
 
             building.Location = GeoJson.Point(GeoJson.Geographic(building.Longitude, building.Latitude));
 
-            await _buildingRepository.AddWithExtras(building, extras);
+            return await _buildingRepository.AddWithExtras(building, extras);
         }
 
         public async Task<IEnumerable<Building>> FindBuildingsNearClient(GeoLocalizationContract clientLocation)

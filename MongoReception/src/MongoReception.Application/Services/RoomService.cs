@@ -49,7 +49,7 @@ namespace MongoReception.Application.Services
             await _roomRepository.AttachExtras(roomId, extras);
         }
 
-        public async Task AddRoomWithExtras(JObject rawRoomWithExtras)
+        public async Task<Room> AddRoomWithExtras(JObject rawRoomWithExtras)
         {
 
             var rawRoom = rawRoomWithExtras["room"];
@@ -58,7 +58,7 @@ namespace MongoReception.Application.Services
             var room = rawRoom.ToObject<Room>();
             var extras = MongoDB.Bson.Serialization.BsonSerializer.Deserialize<BsonArray>(rawExtras.ToString());
 
-            await _roomRepository.AddWithExtras(room, extras);
+            return await _roomRepository.AddWithExtras(room, extras);
         }
     }
 }
