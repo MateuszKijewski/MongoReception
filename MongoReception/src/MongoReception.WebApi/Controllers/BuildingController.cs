@@ -113,9 +113,9 @@ namespace MongoReception.WebApi.Controllers
         {
             try
             {                
-                await _buildingService.AddBuildingWithExtras(rawBuildingWithExtras);
+                var addedBuilding = await _buildingService.AddBuildingWithExtras(rawBuildingWithExtras);
 
-                return Ok();
+                return Ok(addedBuilding);
             }
             catch (Exception e)
             {

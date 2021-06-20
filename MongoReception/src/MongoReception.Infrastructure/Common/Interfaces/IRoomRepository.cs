@@ -8,6 +8,6 @@ namespace MongoReception.Infrastructure.Common.Interfaces
     {
         Task AttachExtras(string roomId, BsonArray extras);
 
-        Task AddWithExtras(Room room, BsonArray extras);
+        Task<Room> AddWithExtras(Room room, BsonArray extras);
     }
 }

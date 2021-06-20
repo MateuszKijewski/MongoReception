@@ -24,7 +24,7 @@ namespace MongoReception.Infrastructure.Repositories
             await _entityCollection.UpdateOneAsync(filter, update);
         }
 
-        public async Task AddWithExtras(Room room, BsonArray extras)
+        public async Task<Room> AddWithExtras(Room room, BsonArray extras)
         {
             using (var session = _mongoClient.StartSession())
             {
@@ -36,6 +36,8 @@ namespace MongoReception.Infrastructure.Repositories
                     await AttachExtras(addedRoom.Id, extras);
 
                     session.CommitTransaction();
+
+                    return addedRoom;
                 }
                 catch (Exception)
                 {

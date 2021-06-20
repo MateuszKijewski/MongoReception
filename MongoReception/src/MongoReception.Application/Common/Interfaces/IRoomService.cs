@@ -19,6 +19,6 @@ namespace MongoReception.Application.Common.Interfaces
 
         Task AttachExtrasToRoom(string roomId, JObject rawExtras);
 
-        Task AddRoomWithExtras(JObject rawBuildingWithExtras);
+        Task<Room> AddRoomWithExtras(JObject rawBuildingWithExtras);
     }
 }
